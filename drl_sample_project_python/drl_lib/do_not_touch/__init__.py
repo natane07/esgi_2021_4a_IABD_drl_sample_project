@@ -60,6 +60,21 @@ _dll.reset_random_single_agent_env.restype = None
 _dll.delete_single_agent_env.argtypes = [c_void_p]
 _dll.delete_single_agent_env.restype = None
 
+_dll.create_secret_env5.argtypes = []
+_dll.create_secret_env5.restype = c_void_p
+
+_dll.act_on_deep_single_agent_with_discrete_actions_env.argtypes = [c_void_p, c_uint64]
+_dll.act_on_deep_single_agent_with_discrete_actions_env.restype = None
+
+_dll.get_deep_single_agent_with_discrete_actions_env_state_data.argtypes = [c_void_p]
+_dll.get_deep_single_agent_with_discrete_actions_env_state_data.restype = WrappedDataPtr
+
+_dll.reset_deep_single_agent_with_discrete_actions_env.argtypes = [c_void_p]
+_dll.reset_deep_single_agent_with_discrete_actions_env.restype = None
+
+_dll.delete_deep_single_agent_with_discrete_actions_env.argtypes = [c_void_p]
+_dll.delete_deep_single_agent_with_discrete_actions_env.restype = None
+
 
 def get_dll():
     global _dll

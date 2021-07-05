@@ -7,6 +7,9 @@ mod bytes_wrapper;
 mod secret_envs_dynamic_libs_wrapper;
 pub mod secret_mdp_env_wrapper;
 pub mod secret_single_agent_env_wrapper;
+#[allow(unused)]
+mod deep_single_agent_env_with_discrete_actions_state_data_generated;
+pub mod secret_deep_single_agent_env_with_discrete_actions_wrapper;
 
 #[cfg(target_os = "windows")]
 pub const SECRET_ENVS_DYN_LIB_PATHS: &str = &"secret_envs_dynamic_libs/drl_mystery_envs_wrapper.dll";

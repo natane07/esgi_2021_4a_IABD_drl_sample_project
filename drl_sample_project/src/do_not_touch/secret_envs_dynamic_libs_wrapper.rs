@@ -6,12 +6,19 @@ use crate::do_not_touch::SECRET_ENVS_DYN_LIB_PATHS;
 #[allow(unused)]
 type CreateMDPEnv = unsafe fn() -> *mut std::ffi::c_void;
 
+type CreateDeepSingleAgentWithDiscreteActionsEnv = unsafe fn() -> *mut std::ffi::c_void;
+type ActOnDeepSingleAgentWithDiscreteActionsEnv = unsafe fn(*mut std::ffi::c_void, usize);
+type GetDeepSingleAgentWithDiscreteActionsEnvStateData = unsafe fn(*mut std::ffi::c_void) -> *mut WrappedData;
+type ResetDeepSingleAgentWithDiscreteActionsEnv = unsafe fn(*mut std::ffi::c_void);
+type DeleteDeepSingleAgentWithDiscreteActionsEnv = unsafe fn(*mut std::ffi::c_void);
+
 type CreateSingleAgentEnv = unsafe fn() -> *mut std::ffi::c_void;
 type ActOnSingleAgentEnv = unsafe fn(*mut std::ffi::c_void, usize);
 type GetSingleAgentEnvStateData = unsafe fn(*mut std::ffi::c_void) -> *mut WrappedData;
 type ResetSingleAgentEnv = unsafe fn(*mut std::ffi::c_void);
 type ResetRandomSingleAgentEnv = unsafe fn(*mut std::ffi::c_void);
 type DeleteSingleAgentEnv = unsafe fn(*mut std::ffi::c_void);
+
 type GetMdpEnvData = unsafe fn(*mut std::ffi::c_void) -> *mut WrappedData;
 type MdpEnvIsStateTerminal = unsafe fn(*mut std::ffi::c_void, s: usize) -> bool;
 type MdpEnvTransitionProbability = unsafe fn(*mut std::ffi::c_void, s: usize, a: usize, s_p: usize, r: f32) -> f32;
@@ -38,6 +45,26 @@ impl SecretEnvDynamicLibWrapper {
 
     pub fn create_secret_env3(&self) -> Symbol<CreateSingleAgentEnv> {
         unsafe { self.lib.get(b"create_secret_env3").unwrap() }
+    }
+
+    pub fn create_secret_env5(&self) -> Symbol<CreateDeepSingleAgentWithDiscreteActionsEnv> {
+        unsafe { self.lib.get(b"create_secret_env5").unwrap() }
+    }
+
+    pub fn act_on_deep_single_agent_with_discrete_actions_env(&self) -> Symbol<ActOnDeepSingleAgentWithDiscreteActionsEnv> {
+        unsafe { self.lib.get(b"act_on_deep_single_agent_with_discrete_actions_env").unwrap() }
+    }
+
+    pub fn get_deep_single_agent_with_discrete_actions_env_state_data(&self) -> Symbol<GetDeepSingleAgentWithDiscreteActionsEnvStateData> {
+        unsafe { self.lib.get(b"get_deep_single_agent_with_discrete_actions_env_state_data").unwrap() }
+    }
+
+    pub fn reset_deep_single_agent_with_discrete_actions_env(&self) -> Symbol<ResetDeepSingleAgentWithDiscreteActionsEnv> {
+        unsafe { self.lib.get(b"reset_deep_single_agent_with_discrete_actions_env").unwrap() }
+    }
+
+    pub fn delete_deep_single_agent_with_discrete_actions_env(&self) -> Symbol<DeleteDeepSingleAgentWithDiscreteActionsEnv> {
+        unsafe { self.lib.get(b"delete_deep_single_agent_with_discrete_actions_env").unwrap() }
     }
 
     pub fn act_on_single_agent_env(&self) -> Symbol<ActOnSingleAgentEnv> {
