@@ -1,3 +1,5 @@
+import numpy as np
+
 from ..do_not_touch.mdp_env_wrapper import Env1
 from ..do_not_touch.result_structures import ValueFunction, PolicyAndValueFunction
 from ..envs.line_world_env import LineWorld
@@ -9,10 +11,30 @@ def policy_evaluation_on_line_world() -> ValueFunction:
     Launches a Policy Evaluation Algorithm in order to find the Value Function of a uniform random policy
     Returns the Value function (V(s)) of this policy
     """
-    # TODO
-    line_word = LineWorld
+    line_word = LineWorld(7)
+    theta = 0.001
+    V = np.zeros(len(line_word.states()))
+    pi = np.ones((len(line_word.states()), len(line_word.actions())))
+    pi /= len(line_word.actions())
+    gamma = 1.0
 
-    pass
+    while True:
+        delta = 0
+        for s in line_word.states():
+            v = V[s]
+            V[s] = 0.0
+            for a in line_word.actions():
+                for s_next in line_word.actions():
+                    for r_index, r in enumerate(line_word.reward()):
+                        V[s] += pi[s, a] * line_word.transition_probability(s, a, s_next, r_index) * (
+                                    r + gamma * V[s_next])
+
+            delta = max(delta, abs(v - V[s]))
+
+        if delta < theta:
+            break
+
+    return dict(enumerate(V.flatten(), 1))
 
 
 def policy_iteration_on_line_world() -> PolicyAndValueFunction:

@@ -7,7 +7,7 @@ class LineWorld(MDPEnv):
         self.cell_nb = cells_nb
         self.__a = np.array([0, 1])  # actions
         self.__r = np.array([-1, 0, 1])  # rewards
-        self.__s = np.arrange(self.cell_nb)  # states
+        self.__s = np.arange(self.cell_nb)  # states
         self.p = self.probability()
 
     def actions(self) -> np.ndarray:
