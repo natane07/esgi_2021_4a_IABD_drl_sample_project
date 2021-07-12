@@ -1,5 +1,6 @@
 from ..do_not_touch.mdp_env_wrapper import Env1
 from ..do_not_touch.result_structures import ValueFunction, PolicyAndValueFunction
+from ..envs.line_world_env import LineWorld
 
 
 def policy_evaluation_on_line_world() -> ValueFunction:
@@ -9,6 +10,8 @@ def policy_evaluation_on_line_world() -> ValueFunction:
     Returns the Value function (V(s)) of this policy
     """
     # TODO
+    line_word = LineWorld
+
     pass
 
 
@@ -19,6 +22,8 @@ def policy_iteration_on_line_world() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     # TODO
+    line_word = LineWorld
+
     pass
 
 
@@ -29,6 +34,8 @@ def value_iteration_on_line_world() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     # TODO
+    line_word = LineWorld
+
     pass
 
 
