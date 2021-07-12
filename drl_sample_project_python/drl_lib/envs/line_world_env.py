@@ -23,7 +23,7 @@ class LineWorld(MDPEnv):
         return s == 0 or s == self.cell_nb - 1  # First cell or last one
 
     def transition_probability(self, s: int, a: int, s_p: int, r: float) -> float:
-        pass
+        return self.p[s_p, r, s, a]
 
     def probability(self) -> np.ndarray:
         p = np.zeros((len(self.__s), len(self.__r), len(self.__s), len(self.__a)))  # p(s', r | s, a)
