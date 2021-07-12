@@ -8,6 +8,7 @@ class LineWorld(MDPEnv):
         self.__a = np.array([0, 1])  # actions
         self.__r = np.array([-1, 0, 1])  # rewards
         self.__s = np.arrange(self.cell_nb)  # states
+        self.p = self.probability()
 
     def actions(self) -> np.ndarray:
         return self.__a
@@ -19,7 +20,7 @@ class LineWorld(MDPEnv):
         return self.__s
 
     def is_state_terminal(self, s: int) -> bool:
-        return s == 0 or s == self.cell_nb - 1  # First case or last one
+        return s == 0 or s == self.cell_nb - 1  # First cell or last one
 
     def transition_probability(self, s: int, a: int, s_p: int, r: float) -> float:
         pass
