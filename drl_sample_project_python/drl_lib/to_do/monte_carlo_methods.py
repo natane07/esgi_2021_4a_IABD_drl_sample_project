@@ -72,8 +72,8 @@ def monte_carlo_es_on_secret_env2() -> PolicyAndActionValueFunction:
     Returns the Optimal Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     """
     env = Env2()
-    # TODO
-    pass
+    result = monte_carlo_es.monte_carlo_es(env, 0.99, max_iter)
+    return result
 
 
 def on_policy_first_visit_monte_carlo_control_on_secret_env2() -> PolicyAndActionValueFunction:
@@ -84,8 +84,8 @@ def on_policy_first_visit_monte_carlo_control_on_secret_env2() -> PolicyAndActio
     Experiment with different values of hyper parameters and choose the most appropriate combination
     """
     env = Env2()
-    # TODO
-    pass
+    result = on_policy_first_visit_monte_carlo.on_policy_first_visit_monte_carlo_control(env, 0.99, 0.1, max_iter)
+    return result
 
 
 def off_policy_monte_carlo_control_on_secret_env2() -> PolicyAndActionValueFunction:
@@ -96,8 +96,8 @@ def off_policy_monte_carlo_control_on_secret_env2() -> PolicyAndActionValueFunct
     Experiment with different values of hyper parameters and choose the most appropriate combination
     """
     env = Env2()
-    # TODO
-    pass
+    result = on_policy_first_visit_monte_carlo.on_policy_first_visit_monte_carlo_control(env, 0.99, 0.1, max_iter)
+    return result
 
 
 def demo():
@@ -110,6 +110,11 @@ def demo():
     print("off_policy_monte_carlo_control_on_tic_tac_toe_solo \n")
     print(off_policy_monte_carlo_control_on_tic_tac_toe_solo())
 
+    print("monte_carlo_es_on_secret_env2 \n")
     print(monte_carlo_es_on_secret_env2())
+
+    print("on_policy_first_visit_monte_carlo_control_on_secret_env2 \n")
     print(on_policy_first_visit_monte_carlo_control_on_secret_env2())
+
+    print("off_policy_monte_carlo_control_on_secret_env2 \n")
     print(off_policy_monte_carlo_control_on_secret_env2())
