@@ -2,11 +2,12 @@ from ..do_not_touch.result_structures import PolicyAndActionValueFunction
 from ..do_not_touch.single_agent_env_wrapper import Env2
 from ..envs import tictactoe_single_agent
 from ..algo_rl import monte_carlo_es
+from ..algo_rl import on_policy_first_visit_monte_carlo
+from ..algo_rl import off_policy_monte_carlo_control
 
 max_iter = 100000
 nb_entrainement = 5
 tic_tac_toe = tictactoe_single_agent.EnvTicTacToeSingleAgent(200)
-
 
 def monte_carlo_es_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
     """
@@ -14,11 +15,11 @@ def monte_carlo_es_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
     Launches a Monte Carlo ES (Exploring Starts) in order to find the optimal Policy and its action-value function
     Returns the Optimal Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     """
-    result = monte_carlo_es.monte_carlo_es(tic_tac_toe, 0.9999, max_iter)
+    result = monte_carlo_es.monte_carlo_es(tic_tac_toe, 0.99, max_iter)
     tic_tac_toe.view()
     for _ in range(0, nb_entrainement):
         tic = tictactoe_single_agent.EnvTicTacToeSingleAgent(100, pi=result.pi)
-        result = monte_carlo_es.monte_carlo_es(tic, 0.9999, max_iter)
+        result = monte_carlo_es.monte_carlo_es(tic, 0.99, max_iter)
         tic.view()
     # return result
 
@@ -42,8 +43,12 @@ def off_policy_monte_carlo_control_on_tic_tac_toe_solo() -> PolicyAndActionValue
     Returns the Optimal Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     Experiment with different values of hyper parameters and choose the most appropriate combination
     """
-    # TODO
-    pass
+    result = off_policy_monte_carlo_control.off_policy_monte_carlo_control(tic_tac_toe, 0.99, max_iter)
+    tic_tac_toe.view()
+    for _ in range(0, nb_entrainement):
+        tic = tictactoe_single_agent.EnvTicTacToeSingleAgent(100, pi=result.pi)
+        result = off_policy_monte_carlo_control.off_policy_monte_carlo_control(tic, 0.99, max_iter)
+        tic.view()
 
 
 def monte_carlo_es_on_secret_env2() -> PolicyAndActionValueFunction:
@@ -82,8 +87,13 @@ def off_policy_monte_carlo_control_on_secret_env2() -> PolicyAndActionValueFunct
 
 
 def demo():
+    print("monte_carlo_es_on_tic_tac_toe_solo \n")
     print(monte_carlo_es_on_tic_tac_toe_solo())
+
+    print("on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo \n")
     print(on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo())
+
+    print("off_policy_monte_carlo_control_on_tic_tac_toe_solo \n")
     print(off_policy_monte_carlo_control_on_tic_tac_toe_solo())
 
     print(monte_carlo_es_on_secret_env2())

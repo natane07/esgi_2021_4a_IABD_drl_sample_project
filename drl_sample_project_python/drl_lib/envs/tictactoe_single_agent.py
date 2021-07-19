@@ -100,8 +100,16 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
             self.game_over = True
 
     def view(self):
-        res = "-" * 10
-        case_str = ['X' if b == 1 else ('O' if b == 10 else '_') for b in self.case]
+        res = '\n' + "-" * 10
+        case_str = []
+        for b in self.case:
+            if b == 1:
+                case_str.append('X')
+            elif b == 10:
+                case_str.append('O')
+            else:
+                case_str.append('_')
+
         for index, case in enumerate(case_str):
             if index % 3 == 0:
                 res += '\n'
@@ -116,10 +124,6 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
         if self.game_over:
             return np.array([], dtype=np.int)
 
-        # Jouer sur une case :
-        # 0  1  2
-        # 3  4  5
-        # 6  7  8
         n = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8], dtype=np.int)
 
         i = 0
@@ -137,11 +141,7 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
         self.current_score = 0.0
         self.case = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.always_random = False
-        # if self.is_first_player == 2:
-        #     self.case[random.randint(0, len(self.case) - 1)] = 10
-        # elif self.is_first_player == 0:
-        #     if random.randint(0, 1) == 1:
-        #         self.case[random.randint(0, len(self.case) - 1)] = 10
+
 
     def is_case_valid(self) -> bool:
         # Il y a t-il des case vide
