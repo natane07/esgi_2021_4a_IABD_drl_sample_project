@@ -1,5 +1,11 @@
 from ..do_not_touch.result_structures import PolicyAndActionValueFunction
 from ..do_not_touch.single_agent_env_wrapper import Env2
+from ..envs import tictactoe_single_agent
+from ..algo_rl import monte_carlo_es
+
+max_iter = 100000
+nb_entrainement = 5
+tic_tac_toe = tictactoe_single_agent.EnvTicTacToeSingleAgent(200)
 
 
 def monte_carlo_es_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
@@ -8,8 +14,13 @@ def monte_carlo_es_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
     Launches a Monte Carlo ES (Exploring Starts) in order to find the optimal Policy and its action-value function
     Returns the Optimal Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     """
-    # TODO
-    pass
+    result = monte_carlo_es.monte_carlo_es(tic_tac_toe, 0.9999, max_iter)
+    tic_tac_toe.view()
+    for _ in range(0, nb_entrainement):
+        tic = tictactoe_single_agent.EnvTicTacToeSingleAgent(100, pi=result.pi)
+        result = monte_carlo_es.monte_carlo_es(tic, 0.9999, max_iter)
+        tic.view()
+    # return result
 
 
 def on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
