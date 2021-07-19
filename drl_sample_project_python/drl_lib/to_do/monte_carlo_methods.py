@@ -32,8 +32,22 @@ def on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo() -> PolicyAnd
     Returns the Optimal epsilon-greedy Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     Experiment with different values of hyper parameters and choose the most appropriate combination
     """
-    # TODO
-    pass
+    result = on_policy_first_visit_monte_carlo.on_policy_first_visit_monte_carlo_control(
+        tic_tac_toe,
+        0.99,
+        0.1,
+        max_iter
+    )
+    tic_tac_toe.view()
+    for _ in range(0, nb_entrainement):
+        tic = tictactoe_single_agent.EnvTicTacToeSingleAgent(100, pi=result.pi)
+        result = on_policy_first_visit_monte_carlo.on_policy_first_visit_monte_carlo_control(
+            tic,
+            0.99,
+            0.1,
+            max_iter
+        )
+        tic.view()
 
 
 def off_policy_monte_carlo_control_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
