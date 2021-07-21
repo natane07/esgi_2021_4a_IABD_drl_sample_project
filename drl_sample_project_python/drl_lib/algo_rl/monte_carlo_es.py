@@ -66,14 +66,13 @@ def monte_carlo_es(env: SingleAgentEnv,
 
 
         # Pour les graphs scores
+
+        if env.score() == 1 :
+            win += 1
+        elif env.score() == -1:
+            loss += 1
         moyenne = (moyenne * iteration_score + env.score()) / (iteration_score + 1)
         iteration_score += 1
-        if env.score() == 10 :
-            win += 1
-        elif env.score() == -5:
-            loss += 1
-        else:
-            egalite += 1
         if episode % 500 == 0 and episode != 0:
             score.append(moyenne)
             moyenne = 0.0
@@ -81,7 +80,7 @@ def monte_carlo_es(env: SingleAgentEnv,
 
     # génération des graphes
     graph_score("Monte carlo ES", score, 500)
-    graph_score_bar("Monte carlo ES - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss, egalite])
+    graph_score_bar("Monte carlo ES - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
 
     return PolicyAndActionValueFunction(pi, q)
 
@@ -94,7 +93,7 @@ def graph_score(title, scores, scale):
 
 def graph_score_bar(title, scores):
     fig = plt.figure(figsize=(10, 5))
-    tile_x = ['Win', 'Loss', 'Egalite']
+    tile_x = ['Win', 'Loss/Egalite']
     plt.bar(tile_x, scores,width=0.4)
     plt.ylabel("Nombre de parties")
     plt.title(title)

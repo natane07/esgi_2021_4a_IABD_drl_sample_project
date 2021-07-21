@@ -51,7 +51,7 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
         # Verification si il y a une un gagnant
         if ligne0 == 3 or ligne1 == 3 or ligne2 == 3 or colonne0 == 3 or colonne1 == 3 or colonne2 == 3 or diagonal0 == 3 or diagonal1 == 3:
             self.game_over = True
-            self.current_score += 10.0
+            self.current_score = 1.0
             return
 
         # Si la grille est complete
@@ -81,7 +81,7 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
         # Verification si l'adversaire gagne
         if ligne0 == 30 or ligne1 == 30 or ligne2 == 30 or colonne0 == 30 or colonne1 == 30 or colonne2 == 30 or diagonal0 == 30 or diagonal1 == 30:
             self.game_over = True
-            self.current_score = -5.0
+            self.current_score = -1.0
             return
 
         # Verification si la grille est complete
@@ -92,6 +92,7 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
 
         # Si la grille est complete : fin du jeu
         if grille_complete:
+            self.current_score = -1.0
             self.game_over = True
             return
 
