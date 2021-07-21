@@ -13,7 +13,7 @@ class LineWorld(MDPEnv):
     def actions(self) -> np.ndarray:
         return self.__a
 
-    def reward(self) -> np.ndarray:
+    def rewards(self) -> np.ndarray:
         return self.__r
 
     def states(self) -> np.ndarray:

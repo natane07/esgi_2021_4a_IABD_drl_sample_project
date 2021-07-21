@@ -3,6 +3,8 @@ import numpy as np
 from ..do_not_touch.mdp_env_wrapper import Env1
 from ..do_not_touch.result_structures import ValueFunction, PolicyAndValueFunction
 from ..envs.line_world_env import LineWorld
+from ..envs.grid_world_env import GridWorld
+from ..algo_rl.dynamic_programming import policy_evaluation, policy_iteration, value_iteration
 
 
 def policy_evaluation_on_line_world() -> ValueFunction:
@@ -11,30 +13,11 @@ def policy_evaluation_on_line_world() -> ValueFunction:
     Launches a Policy Evaluation Algorithm in order to find the Value Function of a uniform random policy
     Returns the Value function (V(s)) of this policy
     """
-    line_word = LineWorld(7)
+    line_world = LineWorld(7)
     theta = 0.001
-    V = np.zeros(len(line_word.states()))
-    pi = np.ones((len(line_word.states()), len(line_word.actions())))
-    pi /= len(line_word.actions())
     gamma = 1.0
 
-    while True:
-        delta = 0
-        for s in line_word.states():
-            v = V[s]
-            V[s] = 0.0
-            for a in line_word.actions():
-                for s_next in line_word.actions():
-                    for r_index, r in enumerate(line_word.reward()):
-                        V[s] += pi[s, a] * line_word.transition_probability(s, a, s_next, r_index) * (
-                                    r + gamma * V[s_next])
-
-            delta = max(delta, abs(v - V[s]))
-
-        if delta < theta:
-            break
-
-    return dict(enumerate(V.flatten(), 1))
+    return policy_evaluation(line_world, theta, gamma)
 
 
 def policy_iteration_on_line_world() -> PolicyAndValueFunction:
@@ -43,10 +26,11 @@ def policy_iteration_on_line_world() -> PolicyAndValueFunction:
     Launches a Policy Iteration Algorithm in order to find the Optimal Policy and its Value Function
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
-    # TODO
-    line_word = LineWorld
+    line_world = LineWorld(7)
+    theta = 0.001
+    gamma = 1.0
 
-    pass
+    return policy_iteration(line_world, theta, gamma)
 
 
 def value_iteration_on_line_world() -> PolicyAndValueFunction:
@@ -55,10 +39,11 @@ def value_iteration_on_line_world() -> PolicyAndValueFunction:
     Launches a Value Iteration Algorithm in order to find the Optimal Policy and its Value Function
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
-    # TODO
-    line_word = LineWorld
+    line_world = LineWorld(7)
+    theta = 0.001
+    gamma = 1.0
 
-    pass
+    return value_iteration(line_world, theta, gamma)
 
 
 def policy_evaluation_on_grid_world() -> ValueFunction:
@@ -67,7 +52,11 @@ def policy_evaluation_on_grid_world() -> ValueFunction:
     Launches a Policy Evaluation Algorithm in order to find the Value Function of a uniform random policy
     Returns the Value function (V(s)) of this policy
     """
-    # TODO
+    grid_world = GridWorld(5, 5)
+    theta = 0.001
+    gamma = 1.0
+
+    return policy_evaluation(grid_world, theta, gamma)
     pass
 
 
@@ -77,7 +66,11 @@ def policy_iteration_on_grid_world() -> PolicyAndValueFunction:
     Launches a Policy Iteration Algorithm in order to find the Optimal Policy and its Value Function
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
-    # TODO
+    grid_world = GridWorld(5, 5)
+    gamma = 1.0
+    theta = 0.001
+
+    return policy_iteration(grid_world, theta, gamma)
     pass
 
 
@@ -87,7 +80,11 @@ def value_iteration_on_grid_world() -> PolicyAndValueFunction:
     Launches a Value Iteration Algorithm in order to find the Optimal Policy and its Value Function
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
-    # TODO
+    grid_world = GridWorld(5, 5)
+    theta = 0.001
+    gamma = 1.0
+
+    return value_iteration(grid_world, theta, gamma)
     pass
 
 
@@ -98,8 +95,10 @@ def policy_evaluation_on_secret_env1() -> ValueFunction:
     Returns the Value function (V(s)) of this policy
     """
     env = Env1()
-    # TODO
-    pass
+    theta = 0.001
+    gamma = 1.0
+
+    return policy_evaluation(env, theta, gamma)
 
 
 def policy_iteration_on_secret_env1() -> PolicyAndValueFunction:
@@ -109,8 +108,10 @@ def policy_iteration_on_secret_env1() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     env = Env1()
-    # TODO
-    pass
+    gamma = 1.0
+    theta = 0.001
+
+    return policy_iteration(env, theta, gamma)
 
 
 def value_iteration_on_secret_env1() -> PolicyAndValueFunction:
@@ -120,8 +121,10 @@ def value_iteration_on_secret_env1() -> PolicyAndValueFunction:
     Prints the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     env = Env1()
-    # TODO
-    pass
+    gamma = 1.0
+    theta = 0.001
+
+    return value_iteration(env, theta, gamma)
 
 
 def demo():
