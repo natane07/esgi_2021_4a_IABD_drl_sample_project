@@ -1,10 +1,10 @@
 import operator
 import random
 import numpy as np
-from ..do_not_touch.contracts import SingleAgentEnv
+from ..do_not_touch.contracts import DeepSingleAgentWithDiscreteActionsEnv
 
 
-class EnvTicTacToeSingleAgent(SingleAgentEnv):
+class EnvTicTacToeDeepSingleAgent(DeepSingleAgentWithDiscreteActionsEnv):
     def __init__(self, max_steps: int, first_player: int = 0, pi=None):
         assert (max_steps > 0)
         self.max_steps = max_steps
@@ -13,6 +13,15 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
 
     def is_game_over(self) -> bool:
         return self.game_over
+
+    def state_description(self) -> np.ndarray:
+        return np.array(self.case)
+
+    def state_description_length(self) -> int:
+        return len(self.case)
+
+    def max_actions_count(self) -> int:
+        return 9
 
     def state_id(self) -> int:
         num = ''
@@ -98,24 +107,6 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
         if self.current_step >= self.max_steps:
             self.game_over = True
 
-    def view(self):
-        res = '\n' + "-" * 10
-        case_str = []
-        for b in self.case:
-            if b == 1:
-                case_str.append('X')
-            elif b == 10:
-                case_str.append('O')
-            else:
-                case_str.append('_')
-
-        for index, case in enumerate(case_str):
-            if index % 3 == 0:
-                res += '\n'
-            res += case + ' ' * 3
-        res += '\n' + '-' * 10
-        print(res)
-
     def score(self) -> float:
         return self.current_score
 
@@ -172,4 +163,22 @@ class EnvTicTacToeSingleAgent(SingleAgentEnv):
     def reset_random(self):
         self.reset()
         self.always_random = False
+
+    def view(self):
+        res = '\n' + "-" * 10
+        case_str = []
+        for b in self.case:
+            if b == 1:
+                case_str.append('X')
+            elif b == 10:
+                case_str.append('O')
+            else:
+                case_str.append('_')
+
+        for index, case in enumerate(case_str):
+            if index % 3 == 0:
+                res += '\n'
+            res += case + ' ' * 3
+        res += '\n' + '-' * 10
+        print(res)
 
