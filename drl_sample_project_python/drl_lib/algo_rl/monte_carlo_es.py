@@ -1,7 +1,7 @@
 import numpy as np
 from tqdm import *
-import matplotlib.pyplot as plt
 
+from ..utils import graph_score_bar, graph_score
 from ..do_not_touch.contracts import SingleAgentEnv
 from ..do_not_touch.result_structures import PolicyAndActionValueFunction
 
@@ -19,7 +19,6 @@ def monte_carlo_es(env: SingleAgentEnv,
     iteration_score = 0
     win = 0
     loss = 0
-    egalite = 0
 
     for episode in tqdm(range(max_iter)):
         env.reset_random()
@@ -65,12 +64,12 @@ def monte_carlo_es(env: SingleAgentEnv,
                 pi[s_t] = list(q[s_t].keys())[np.argmax(list(q[s_t].values()))]
 
 
-        # Pour les graphs scores
-
+        # Pour les graphs score
         if env.score() == 1 :
             win += 1
-        elif env.score() == -1:
+        elif env.score() == 0:
             loss += 1
+        # print(env.score())
         moyenne = (moyenne * iteration_score + env.score()) / (iteration_score + 1)
         iteration_score += 1
         if episode % 500 == 0 and episode != 0:
@@ -83,18 +82,3 @@ def monte_carlo_es(env: SingleAgentEnv,
     graph_score_bar("Monte carlo ES - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
 
     return PolicyAndActionValueFunction(pi, q)
-
-def graph_score(title, scores, scale):
-    plt.title(title)
-    plt.xlabel("Iterations")
-    plt.ylabel("Score moyen pour " + str(scale) + " parties")
-    plt.plot(np.arange(1, len(scores) + 1), scores)
-    plt.show()
-
-def graph_score_bar(title, scores):
-    fig = plt.figure(figsize=(10, 5))
-    tile_x = ['Win', 'Loss/Egalite']
-    plt.bar(tile_x, scores,width=0.4)
-    plt.ylabel("Nombre de parties")
-    plt.title(title)
-    plt.show()

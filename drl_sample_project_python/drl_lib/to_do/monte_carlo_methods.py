@@ -96,7 +96,7 @@ def off_policy_monte_carlo_control_on_secret_env2() -> PolicyAndActionValueFunct
     Experiment with different values of hyper parameters and choose the most appropriate combination
     """
     env = Env2()
-    result = on_policy_first_visit_monte_carlo.on_policy_first_visit_monte_carlo_control(env, 0.99, 0.1, max_iter)
+    result = off_policy_monte_carlo_control.off_policy_monte_carlo_control(env, 0.99, max_iter)
     return result
 
 

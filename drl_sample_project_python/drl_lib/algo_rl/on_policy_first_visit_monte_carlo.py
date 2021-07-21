@@ -2,6 +2,7 @@ import numpy as np
 from tqdm import *
 from ..do_not_touch.contracts import SingleAgentEnv
 from ..do_not_touch.result_structures import PolicyAndActionValueFunction
+from ..utils import graph_score_bar, graph_score
 
 def on_policy_first_visit_monte_carlo_control(
         env: SingleAgentEnv,
@@ -14,7 +15,14 @@ def on_policy_first_visit_monte_carlo_control(
     q = {}
     returns = {}
 
-    for _ in tqdm(range(max_iter)):
+    # pour les graph
+    score = []
+    moyenne = 0.0
+    iteration_score = 0
+    win = 0
+    loss = 0
+
+    for episode in tqdm(range(max_iter)):
         env.reset_random()
 
         S = []
@@ -66,5 +74,21 @@ def on_policy_first_visit_monte_carlo_control(
                         pi[s_t][a] = 1 - eps + eps/available_action_t_counts
                     else:
                         pi[s_t][a] = eps / available_action_t_counts
+
+        # Pour les graphs score
+        if env.score() == 1 :
+            win += 1
+        elif env.score() == 0:
+            loss += 1
+        moyenne = (moyenne * iteration_score + env.score()) / (iteration_score + 1)
+        iteration_score += 1
+        if episode % 500 == 0 and episode != 0:
+            score.append(moyenne)
+            moyenne = 0.0
+            iteration_score = 0
+
+    # génération des graphes
+    graph_score("On policy first visit Monte carlo", score, 500)
+    graph_score_bar("On policy first visit Monte carlo - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
 
     return PolicyAndActionValueFunction(pi, q)

@@ -3,6 +3,7 @@ from tqdm import *
 
 from ..do_not_touch.contracts import SingleAgentEnv
 from ..do_not_touch.result_structures import PolicyAndActionValueFunction
+from ..utils import graph_score_bar, graph_score
 
 
 def off_policy_monte_carlo_control(
@@ -12,7 +13,14 @@ def off_policy_monte_carlo_control(
 ) -> PolicyAndActionValueFunction:
     q = {}
     c = {}
-    pi = {}     # dict(int) deterministic target policy
+    pi = {}
+
+    # pour les graph
+    score = []
+    moyenne = 0.0
+    iteration_score = 0
+    win = 0
+    loss = 0
 
     def random_soft_policy_for_state(env: SingleAgentEnv, b):
         rng = np.random.default_rng()
@@ -27,7 +35,7 @@ def off_policy_monte_carlo_control(
                 b_s[a] = proba_s[id_a]
             # print(b_s.values())
 
-    for _ in tqdm(range(max_iter)):
+    for episode in tqdm(range(max_iter)):
         env.reset()
         b = {}  # dict(dict(float)) soft behavior policy
         S = []
@@ -69,4 +77,21 @@ def off_policy_monte_carlo_control(
             if a_t == pi[s_t]:
                 break
             W = W / b[s_t][a_t]
+
+        # Pour les graphs score
+        if env.score() == 1 :
+            win += 1
+        elif env.score() == 0:
+            loss += 1
+        moyenne = (moyenne * iteration_score + env.score()) / (iteration_score + 1)
+        iteration_score += 1
+        if episode % 500 == 0 and episode != 0:
+            score.append(moyenne)
+            moyenne = 0.0
+            iteration_score = 0
+
+    # génération des graphes
+    graph_score("Off policy Monte carlo Control", score, 500)
+    graph_score_bar("Off policy Monte carlo Control - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
+
     return PolicyAndActionValueFunction(pi, q)
