@@ -34,20 +34,25 @@ class EnvTicTacToeDeepSingleAgent(DeepSingleAgentWithDiscreteActionsEnv):
                 num += '3'
         return int(num)
 
+    def is_win(self, case=[0, 1, 2], number_win=3):
+        if self.case[case[0]] + self.case[case[1]] + self.case[case[2]] == number_win:
+            return True
+        return False
+
     def act_with_action_id(self, action_id: int):
         assert (not self.game_over)
         assert (action_id in [0, 1, 2, 3, 4, 5, 6, 7, 8])
         self.case[action_id] = 1
 
         # Toutes les possibiltés de gagner
-        ligne0 = self.case[0] + self.case[1] + self.case[2]
-        ligne1 = self.case[3] + self.case[4] + self.case[5]
-        ligne2 = self.case[6] + self.case[7] + self.case[8]
-        colonne0 = self.case[0] + self.case[3] + self.case[6]
-        colonne1 = self.case[1] + self.case[4] + self.case[7]
-        colonne2 = self.case[2] + self.case[5] + self.case[8]
-        diagonal0 = self.case[0] + self.case[4] + self.case[8]
-        diagonal1 = self.case[2] + self.case[4] + self.case[6]
+        ligne0 = self.is_win(case=[0, 1, 2], number_win=3)
+        ligne1 = self.is_win(case=[3, 4, 5], number_win=3)
+        ligne2 = self.is_win(case=[6, 7, 8], number_win=3)
+        colonne0 = self.is_win(case=[0, 3, 6], number_win=3)
+        colonne1 = self.is_win(case=[1, 4, 7], number_win=3)
+        colonne2 = self.is_win(case=[2, 5, 8], number_win=3)
+        diagonal0 = self.is_win(case=[0, 4, 8], number_win=3)
+        diagonal1 = self.is_win(case=[2, 4, 6], number_win=3)
 
         # Verification si la grille est complete
         grille_complete = True
@@ -56,7 +61,7 @@ class EnvTicTacToeDeepSingleAgent(DeepSingleAgentWithDiscreteActionsEnv):
                 grille_complete = False
 
         # Verification si il y a une un gagnant
-        if ligne0 == 3 or ligne1 == 3 or ligne2 == 3 or colonne0 == 3 or colonne1 == 3 or colonne2 == 3 or diagonal0 == 3 or diagonal1 == 3:
+        if ligne0 or ligne1 or ligne2 or colonne0 or colonne1 or colonne2 or diagonal0 or diagonal1:
             self.game_over = True
             self.current_score = 1.0
             return
@@ -76,17 +81,17 @@ class EnvTicTacToeDeepSingleAgent(DeepSingleAgentWithDiscreteActionsEnv):
         self.case[a] = 10
 
         # Toutes les possibiltés de gagner
-        ligne0 = self.case[0] + self.case[1] + self.case[2]
-        ligne1 = self.case[3] + self.case[4] + self.case[5]
-        ligne2 = self.case[6] + self.case[7] + self.case[8]
-        colonne0 = self.case[0] + self.case[3] + self.case[6]
-        colonne1 = self.case[1] + self.case[4] + self.case[7]
-        colonne2 = self.case[2] + self.case[5] + self.case[8]
-        diagonal0 = self.case[0] + self.case[4] + self.case[8]
-        diagonal1 = self.case[2] + self.case[4] + self.case[6]
+        ligne0 = self.is_win(case=[0, 1, 2], number_win=30)
+        ligne1 = self.is_win(case=[3, 4, 5], number_win=30)
+        ligne2 = self.is_win(case=[6, 7, 8], number_win=30)
+        colonne0 = self.is_win(case=[0, 3, 6], number_win=30)
+        colonne1 = self.is_win(case=[1, 4, 7], number_win=30)
+        colonne2 = self.is_win(case=[2, 5, 8], number_win=30)
+        diagonal0 = self.is_win(case=[0, 4, 8], number_win=30)
+        diagonal1 = self.is_win(case=[2, 4, 6], number_win=30)
 
         # Verification si l'adversaire gagne
-        if ligne0 == 30 or ligne1 == 30 or ligne2 == 30 or colonne0 == 30 or colonne1 == 30 or colonne2 == 30 or diagonal0 == 30 or diagonal1 == 30:
+        if ligne0 or ligne1 or ligne2 or colonne0 or colonne1 or colonne2 or diagonal0 or diagonal1:
             self.game_over = True
             self.current_score = 0.0
             return
@@ -131,34 +136,6 @@ class EnvTicTacToeDeepSingleAgent(DeepSingleAgentWithDiscreteActionsEnv):
         self.current_score = 0.0
         self.case = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.always_random = False
-
-
-    def is_case_valid(self) -> bool:
-        # Il y a t-il des case vide
-        case_not_empty = False
-        for i in range(len(self.case)):
-            if self.case[i] == 0:
-                case_not_empty = True
-
-        if not case_not_empty:
-            return False
-
-        # Toutes les possibiltés de gagner
-        ligne0 = self.case[0] + self.case[1] + self.case[2]
-        ligne1 = self.case[3] + self.case[4] + self.case[5]
-        ligne2 = self.case[6] + self.case[7] + self.case[8]
-        colonne0 = self.case[0] + self.case[3] + self.case[6]
-        colonne1 = self.case[1] + self.case[4] + self.case[7]
-        colonne2 = self.case[2] + self.case[5] + self.case[8]
-        diagonal0 = self.case[0] + self.case[4] + self.case[8]
-        diagonal1 = self.case[2] + self.case[4] + self.case[6]
-
-        # Verification d'un gagnant
-        if ligne0 == 3 or ligne1 == 3 or ligne2 == 3 or colonne0 == 3 or colonne1 == 3 or colonne2 == 3 or diagonal0 == 3 or diagonal1 == 3:
-            return False
-        if ligne0 == 30 or ligne1 == 30 or ligne2 == 30 or colonne0 == 30 or colonne1 == 30 or colonne2 == 30 or diagonal0 == 30 or diagonal1 == 30:
-            return False
-        return True
 
     def reset_random(self):
         self.reset()
