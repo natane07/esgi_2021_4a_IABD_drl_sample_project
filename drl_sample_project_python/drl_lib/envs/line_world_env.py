@@ -29,12 +29,12 @@ class LineWorld(MDPEnv):
         p = np.zeros((len(self.__s), len(self.__r), len(self.__s), len(self.__a)))  # p(s', r | s, a)
 
         for s in range(2, self.cell_nb - 1):
-            p[s, 1, s - 1, 0] = 1.0
+            p[s - 1, 1, s, 0] = 1.0
 
         for s in range(1, self.cell_nb - 2):
-            p[s, 1, s + 1, 1] = 1.0
+            p[s + 1, 1, s, 1] = 1.0
 
-        p[1, 0, 0, 0] = 1.0
-        p[self.cell_nb - 2, 2, self.cell_nb - 1, 1] = 1.0
+        p[0, 0, 1, 0] = 1.0
+        p[self.cell_nb - 1, 2, self.cell_nb - 2, 1] = 1.0
 
         return p
