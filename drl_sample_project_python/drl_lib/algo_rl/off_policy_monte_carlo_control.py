@@ -9,7 +9,8 @@ from ..utils import graph_score_bar, graph_score
 def off_policy_monte_carlo_control(
         env: SingleAgentEnv,
         gamma: float,
-        max_iter: int
+        max_iter: int,
+        name_env=""
 ) -> PolicyAndActionValueFunction:
     q = {}
     c = {}
@@ -91,7 +92,7 @@ def off_policy_monte_carlo_control(
             iteration_score = 0
 
     # génération des graphes
-    graph_score("Off policy Monte carlo Control", score, 500)
-    graph_score_bar("Off policy Monte carlo Control - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
+    graph_score("Off policy Monte carlo Control on " + name_env, score, 500)
+    graph_score_bar("Off policy Monte carlo Control on " + name_env + " - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
 
     return PolicyAndActionValueFunction(pi, q)

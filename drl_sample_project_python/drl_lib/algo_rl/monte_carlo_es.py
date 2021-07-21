@@ -8,7 +8,8 @@ from ..do_not_touch.result_structures import PolicyAndActionValueFunction
 
 def monte_carlo_es(env: SingleAgentEnv,
                    gamma: float,
-                   max_iter: int) -> PolicyAndActionValueFunction:
+                   max_iter: int,
+                   name_env="") -> PolicyAndActionValueFunction:
     pi = {}
     q = {}
     returns = {}
@@ -78,7 +79,7 @@ def monte_carlo_es(env: SingleAgentEnv,
             iteration_score = 0
 
     # génération des graphes
-    graph_score("Monte carlo ES", score, 500)
-    graph_score_bar("Monte carlo ES - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
+    graph_score("Monte carlo ES on " + name_env, score, 500)
+    graph_score_bar("Monte carlo ES on " + name_env + " - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
 
     return PolicyAndActionValueFunction(pi, q)

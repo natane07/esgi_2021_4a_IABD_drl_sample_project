@@ -8,7 +8,8 @@ def on_policy_first_visit_monte_carlo_control(
         env: SingleAgentEnv,
         gamma: float,
         eps: float,
-        max_iter: int
+        max_iter: int,
+        name_env=""
 ) -> PolicyAndActionValueFunction:
     assert(eps > 0)
     pi = {}
@@ -88,7 +89,7 @@ def on_policy_first_visit_monte_carlo_control(
             iteration_score = 0
 
     # génération des graphes
-    graph_score("On policy first visit Monte carlo", score, 500)
-    graph_score_bar("On policy first visit Monte carlo - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
+    graph_score("On policy first visit Monte carlo on " + name_env, score, 500)
+    graph_score_bar("On policy first visit Monte carlo on " + name_env + " - Score des parties pour " + str(max_iter) + " parties jouer", [win, loss])
 
     return PolicyAndActionValueFunction(pi, q)
