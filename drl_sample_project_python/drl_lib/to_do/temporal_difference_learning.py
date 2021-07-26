@@ -1,13 +1,10 @@
 from ..do_not_touch.result_structures import PolicyAndActionValueFunction
 from ..do_not_touch.single_agent_env_wrapper import Env3
 from ..envs import tictactoe_single_agent
-
 from ..algo_rl import expected_sarsa
-from ..algo_rl import sarsa
 from ..algo_rl import q_learning
 
 iteration = 100000
-nb_entrainement = 0
 tic_tac_toe = tictactoe_single_agent.EnvTicTacToeSingleAgent(200)
 
 def sarsa_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
