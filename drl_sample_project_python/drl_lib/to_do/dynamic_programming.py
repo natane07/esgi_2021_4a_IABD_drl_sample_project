@@ -14,8 +14,8 @@ def policy_evaluation_on_line_world() -> ValueFunction:
     Returns the Value function (V(s)) of this policy
     """
     line_world = LineWorld(7)
-    theta = 0.001
-    gamma = 1.0
+    theta = 0.00001
+    gamma = 0.9
 
     return policy_evaluation(line_world, theta, gamma)
 
@@ -27,8 +27,8 @@ def policy_iteration_on_line_world() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     line_world = LineWorld(7)
-    theta = 0.001
-    gamma = 1.0
+    theta = 0.00001
+    gamma = 0.9
 
     return policy_iteration(line_world, theta, gamma)
 
@@ -40,8 +40,8 @@ def value_iteration_on_line_world() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     line_world = LineWorld(7)
-    theta = 0.001
-    gamma = 1.0
+    theta = 0.00001
+    gamma = 0.9
 
     return value_iteration(line_world, theta, gamma)
 
@@ -53,8 +53,8 @@ def policy_evaluation_on_grid_world() -> ValueFunction:
     Returns the Value function (V(s)) of this policy
     """
     grid_world = GridWorld(5, 5)
-    theta = 0.001
-    gamma = 1.0
+    theta = 0.00001
+    gamma = 0.9
 
     return policy_evaluation(grid_world, theta, gamma)
     pass
@@ -67,8 +67,8 @@ def policy_iteration_on_grid_world() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     grid_world = GridWorld(5, 5)
-    gamma = 1.0
-    theta = 0.001
+    gamma = 0.9
+    theta = 0.00001
 
     return policy_iteration(grid_world, theta, gamma)
     pass
@@ -81,8 +81,8 @@ def value_iteration_on_grid_world() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     grid_world = GridWorld(5, 5)
-    theta = 0.001
-    gamma = 1.0
+    theta = 0.00001
+    gamma = 0.9
 
     return value_iteration(grid_world, theta, gamma)
     pass
@@ -95,8 +95,8 @@ def policy_evaluation_on_secret_env1() -> ValueFunction:
     Returns the Value function (V(s)) of this policy
     """
     env = Env1()
-    theta = 0.001
-    gamma = 1.0
+    theta = 0.00001
+    gamma = 0.9
 
     return policy_evaluation(env, theta, gamma)
 
@@ -108,8 +108,8 @@ def policy_iteration_on_secret_env1() -> PolicyAndValueFunction:
     Returns the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     env = Env1()
-    gamma = 1.0
-    theta = 0.001
+    gamma = 0.9
+    theta = 0.00001
 
     return policy_iteration(env, theta, gamma)
 
@@ -121,8 +121,8 @@ def value_iteration_on_secret_env1() -> PolicyAndValueFunction:
     Prints the Policy (Pi(s,a)) and its Value Function (V(s))
     """
     env = Env1()
-    gamma = 1.0
-    theta = 0.001
+    gamma = 0.9
+    theta = 0.00001
 
     return value_iteration(env, theta, gamma)
 

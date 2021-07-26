@@ -13,6 +13,7 @@ class GridWorld(MDPEnv):
         self.bad_end = 4
         self.good_end = self.cell_nb - 1
         self.p = self.probability()
+        self.name_env = "Grid World"
 
     def actions(self) -> np.ndarray:
         return self.__a

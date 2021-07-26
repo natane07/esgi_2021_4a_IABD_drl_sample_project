@@ -9,6 +9,7 @@ class LineWorld(MDPEnv):
         self.__r = np.array([-1, 0, 1])  # rewards
         self.__s = np.arange(self.cell_nb)  # states
         self.p = self.probability()
+        self.name_env = "Line World"
 
     def actions(self) -> np.ndarray:
         return self.__a
